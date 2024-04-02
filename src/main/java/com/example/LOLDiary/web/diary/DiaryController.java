@@ -31,6 +31,10 @@ public class DiaryController {
 
     @PostMapping("/create")
     public String createDiary(@Validated @ModelAttribute("diary") DiaryDto dto, BindingResult bindingResult, HttpServletRequest request){
+        if (bindingResult.hasErrors()) {
+            return "login/loginForm";
+        }
+
         Member loginMember = getMemberFromSession(request);
         String nickname = loginMember.getNickname();
         String diaryText = dto.getDiaryText();
