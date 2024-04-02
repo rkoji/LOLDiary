@@ -8,8 +8,11 @@
 <body>
 <h2>로그인 후 홈 화면</h2>
 <h4 th:text="|로그인: ${member.nickname}|">로그인 사용자 이름</h4>
-<button type="button" th:onclick="|location.href='@{/items}'|"}>
-  상품 관리
+<button type="button" th:onclick="|location.href='@{/diary/summoner}'|"}>
+  소환사 정보
+</button>
+<button type="button" th:onclick="|location.href='@{/diary/create}'|"}>
+  다이어리 작성
 </button>
 <form th:action="@{/logout}" method="post">
   <button type="submit">

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h2>소환사 정보 확인</h2>
+<h4 th:text="|소환사 이름: ${summoner.name}|">소환사 이름</h4>
+<h4 th:text="|소환사 계정ID: ${summoner.accountId}|">소환사 계정ID</h4>
+<h4 th:text="|소환사 puuId: ${summoner.puuId}|">소환사 puuId</h4>
+<h4 th:text="|소환사 프로필 아이콘 ID: ${summoner.profileIconId}|">소환사 프로필 아이콘 ID</h4>
+<h4 th:text="|소환사 생성날짜: ${summoner.revisionDate}|">소환사 생성날짜</h4>
+<h4 th:text="|소환사 레벨: ${summoner.summonerLevel}|">소환사 레벨</h4>
+
+</body>
+</html>

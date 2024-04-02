@@ -1,6 +1,7 @@
 package com.example.LOLDiary.web.login;
 
 import com.example.LOLDiary.domain.member.Member;
+import com.example.LOLDiary.web.session.SessionConst;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class LoginController {
 
     private final LoginService loginService;
-    public static final String LOGIN_MEMBER = "loginMember";
 
     @GetMapping("/login")
     public String loginForm(@ModelAttribute("login") LoginDto dto) {
@@ -42,10 +42,8 @@ public class LoginController {
             return "login/loginForm";
         }
 
-        // 세션을 생성하기 전 기존 세션 파기
-        request.getSession().invalidate();
         HttpSession session = request.getSession(true);
-        session.setAttribute(LOGIN_MEMBER, loginMember);
+        session.setAttribute(SessionConst.LOGIN_MEMBER, loginMember);
         // session 30분 동안 유지
         session.setMaxInactiveInterval(1800);
 
