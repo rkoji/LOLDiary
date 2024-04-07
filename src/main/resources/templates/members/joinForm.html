@@ -1,52 +1,64 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
     <link th:href="@{/css/bootstrap.min.css}"
           href="../css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        .container{
-            max-width: 560px;
-        }
-        .field-error{
-
-        }
-    </style>
     <title>Title</title>
 </head>
+<style>
+    .field-error{
+        color: #0a53be;
+    }
+</style>
 <body>
-<div class="container">
+<div class="container" style="max-width: 600px">
     <div class="py-5 text-center">
-        <h2>회원 가입</h2>
+        <h2 class="font-monospace fw-bold text-primary">회원 가입</h2>
     </div>
-    <h4 class="mb-3">회원 정보 입력</h4>
     <form action="" th:action th:object="${member}" method="post">
         <!-- 전체 오류 메세지가 필요하게되면 추가예정 -->
+        <p>
         <div>
-            <label for="loginId">로그인 ID</label>
-            <input type="text" id="loginId" name="loginId" th:field="*{loginId}" class="form-control"
-            th:errorclass="field-error">
+            <div class="row fw-bold font-monospace">
+            <label for="loginId">아이디</label>
+            <input type="text" id="loginId" name="loginId" th:field="*{loginId}" class="form-control text-center" placeholder="ID를 입력해주세요"
+                   th:errorclass="field-error">
             <div class="field-error" th:errors="*{loginId}"></div>
         </div>
+        </div>
+        </p>
+        <p>
         <div>
+            <div class="row fw-bold font-monospace">
             <label for="password">비밀번호</label>
-            <input type="password" id="password" name="password" th:field="*{password}" class="form-control"
-            th:errorclass="field-error">
+            <input type="password" id="password" name="password" th:field="*{password}" class="form-control text-center" placeholder="비밀번호를 입력해주세요"
+                   th:errorclass="field-error">
             <div class="field-error" th:errors="*{password}"/>
         </div>
+        </div>
+        </p>
+        <p>
         <div>
+            <div class="row fw-bold font-monospace">
             <label for="nickName">게임 닉네임</label>
-            <input type="text" id="nickName" name="nickname" th:field="*{nickname}" class="form-control"
+            <input type="text" id="nickName" name="nickname" th:field="*{nickname}" class="form-control text-center" placeholder="게임 닉네임을 입력해주세요"
                    th:errorclass="field-error">
             <div class="field-error" th:errors="*{nickname}"/>
+            </div>
         </div>
-        <button type="submit">회원 가입</button>
-        <button th:onclick="|location.href='@{/}'|"
+        </p>
+            <hr class="my-4">
+        <div class="row">
+            <div class="col">
+            <button  class="w-100 btn btn-primary btn-lg" type="submit">회원 가입</button>
+        </div>
+        <div class="col">
+        <button  class="w-100 btn btn-secondary btn-lg" th:onclick="|location.href='@{/}'|"
                 type="button">취소</button>
+        </div>
+        </div>
     </form>
-    <hr>
-
-
 </div>
 
 </body>
