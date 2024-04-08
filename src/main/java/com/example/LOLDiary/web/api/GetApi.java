@@ -11,6 +11,9 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,16 +26,23 @@ public class GetApi {
     public SummonerDto getSummonerFromApi(String nickname) {
         // riot api에서 summoner 데이터 가져오기
         String summonerData = getSummoner(nickname);
-
+        
         // 받아온 데이터 json 파싱하기
         Map<String, Object> parseSummoner = parseSummoner(summonerData);
+
+        Long epochTime = (Long) parseSummoner.get("revisionDate");
+        Date date = new Date(epochTime);
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String dateString = dateFormat.format(date);
+
         return SummonerDto.builder()
                 .id(parseSummoner.get("id").toString())
                 .accountId(parseSummoner.get("accountId").toString())
                 .puuid(parseSummoner.get("puuid").toString())
                 .name(parseSummoner.get("name").toString())
                 .profileIconId((Long) parseSummoner.get("profileIconId"))
-                .revisionDate((Long) parseSummoner.get("revisionDate"))
+                .revisionDate(LocalDate.parse(dateString))
                 .summonerLevel((Long) parseSummoner.get("summonerLevel"))
                 .build();
     }

@@ -10,6 +10,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
@@ -25,7 +27,7 @@ public class Summoner {
     private String puuId;
     private String name;
     private Long profileIconId;
-    private Long revisionDate;
+    private LocalDate revisionDate;
     private Long summonerLevel;
 
     public Summoner saveSummoner(SummonerDto dto) {
