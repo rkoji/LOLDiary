@@ -1,14 +1,43 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
+    <link th:href="@{/css/bootstrap.min.css}"
+          href="../css/bootstrap.min.css" rel="stylesheet">
     <title>Title</title>
 </head>
+<style>
+    .field-error {
+        color: #0a53be;
+    }
+</style>
 <body>
-<h2>홈 화면</h2>
-<button type="button" th:onclick="|location.href='@{/members/add}'|">
-    회원가입
-</button>
-<button type="button" th:onclick="|location.href='@{/login}'|">로그인</button>
+<div class="container" style="max-width: 600px">
+    <div class="py-5 text-center">
+        <h2 class="font-monospace fw-bold">홈 화면</h2>
+    </div>
+    <p class="row">
+    <p class="col">
+        <button class="w-100 btn btn-lg btn-primary" type="button" th:onclick="|location.href='@{/diary/create}'|">
+            일기
+        </button>
+    </p>
+    </p>
+    <div class="row">
+        <div class="col">
+            <button class="w-100 btn btn-lg btn-secondary " type="button" th:onclick="|location.href='@{/members/add}'|">
+                회원가입
+            </button>
+        </div>
+        <div class="col">
+            <button class="w-100 btn btn-lg btn-light" type="button" th:onclick="|location.href='@{/login}'|">로그인
+            </button>
+        </div>
+    </div>
+
+
+</div>
+
+
 </body>
 </html>
