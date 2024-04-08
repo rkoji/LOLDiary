@@ -1,18 +1,34 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
+    <link th:href="@{/css/bootstrap.min.css}"
+          href="../css/bootstrap.min.css" rel="stylesheet">
     <title>Title</title>
 </head>
+<style>
+    .field-error {
+        color: #0a53be;
+    }
+</style>
 <body>
-<h2>소환사 정보 확인</h2>
-<h4 th:text="|소환사 이름: ${summoner.name}|">소환사 이름</h4>
-<h4 th:text="|소환사 계정ID: ${summoner.accountId}|">소환사 계정ID</h4>
-<h4 th:text="|소환사 puuId: ${summoner.puuId}|">소환사 puuId</h4>
-<h4 th:text="|소환사 프로필 아이콘 ID: ${summoner.profileIconId}|">소환사 프로필 아이콘 ID</h4>
-<h4 th:text="|소환사 생성날짜: ${summoner.revisionDate}|">소환사 생성날짜</h4>
-<h4 th:text="|소환사 레벨: ${summoner.summonerLevel}|">소환사 레벨</h4>
-
+<div class="container" style="max-width: 600px">
+    <div class="py-5 text-center">
+        <h2 class="font-monospace fw-bold text-primary">Player</h2>
+    </div>
+    <div class="row fw-bold font-monospace">
+        <h4 class="border border-primary p-2 mb-2 border-opacity-50 form-control text-center"
+            th:text="|닉네임: ${summoner.name}|">이름</h4>
+        <!--
+        <h4 class="border border-primary p-2 mb-2 border-opacity-50 form-control text-center" th:text="|계정ID: ${summoner.accountId}|">계정ID</h4>
+        <h4 th:text="|소환사 puuId: ${summoner.puuId}|">소환사 puuId</h4>
+        <h4 th:text="|소환사 프로필 아이콘 ID: ${summoner.profileIconId}|">소환사 프로필 아이콘 ID</h4>
+        -->
+        <h4 class="border border-primary p-2 mb-2 border-opacity-50 form-control text-center"
+            th:text="|api호출 날짜: ${summoner.revisionDate}|">api호출 날짜</h4>
+        <h4 class="border border-primary p-2 mb-2 border-opacity-50 form-control text-center"
+            th:text="|레벨: ${summoner.summonerLevel}|">레벨</h4>
+    </div>
+</div>
 </body>
 </html>
