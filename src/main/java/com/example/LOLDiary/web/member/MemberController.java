@@ -25,7 +25,7 @@ public class MemberController {
     }
 
     @PostMapping("/add")
-    public String save(@Validated @ModelAttribute("member") JoinMemberDto dto, BindingResult bindingResult) {
+    public String save(@Validated @ModelAttribute("member") JoinMemberDto dto,BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             log.info("에러발생");
             log.error(bindingResult.getAllErrors().toString());

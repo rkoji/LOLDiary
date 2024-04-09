@@ -1,6 +1,11 @@
 package com.example.LOLDiary.web.api;
 
+import com.example.LOLDiary.web.match.MatchDto;
 import com.example.LOLDiary.web.member.SummonerDto;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -8,14 +13,13 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @Component
 public class GetApi {
@@ -26,7 +30,7 @@ public class GetApi {
     public SummonerDto getSummonerFromApi(String nickname) {
         // riot api에서 summoner 데이터 가져오기
         String summonerData = getSummoner(nickname);
-        
+
         // 받아온 데이터 json 파싱하기
         Map<String, Object> parseSummoner = parseSummoner(summonerData);
 
@@ -50,18 +54,8 @@ public class GetApi {
 
     private String getSummoner(String nickname) {
         String apiUrl = "https://kr.api.riotgames.com/lol/summoner/v4/summoners/by-name/" + nickname + "?api_key=" + apiKey;
-
         try {
-            URL url = new URL(apiUrl);
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setRequestMethod("GET");
-            int responseCode = connection.getResponseCode();
-            BufferedReader br;
-            if (responseCode == 200) {
-                br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-            } else {
-                br = new BufferedReader(new InputStreamReader(connection.getErrorStream()));
-            }
+            BufferedReader br = getBufferedReader(apiUrl);
             String inputLine;
             StringBuilder response = new StringBuilder();
             while ((inputLine = br.readLine()) != null) {
@@ -96,5 +90,56 @@ public class GetApi {
         resultMap.put("summonerLevel", jsonObject.get("summonerLevel"));
         return resultMap;
 
+    }
+
+    // 해당 날짜의 match정보를 가져오기
+    private String getMatches(long startEpochTimestamp, long endEpochTimestamp, String puuid) {
+        String apiUrl = "https://asia.api.riotgames.com/lol/match/v5/matches/by-puuid/"+puuid+"/ids?startTime="+startEpochTimestamp+"&endTime="+endEpochTimestamp+"&start=0&count=20&api_key="+apiKey;
+        try {
+            BufferedReader br = getBufferedReader(apiUrl);
+            String inputLine;
+            StringBuilder response = new StringBuilder();
+            while ((inputLine = br.readLine()) != null) {
+                response.append(inputLine);
+            }
+            br.close();
+
+            return response.toString();
+        } catch (Exception e) {
+            return "failed to get response";
+        }
+    }
+
+    private static List<String> parseMatch(String jsonString) throws JsonProcessingException {
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            return objectMapper.readValue(jsonString, List.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public List<String> getMatchList(long startEpochTimestamp, long endEpochTimestamp, String puuid) throws JsonProcessingException {
+        // riot api에서 match 데이터 가져오기
+        String matches = getMatches(startEpochTimestamp, endEpochTimestamp, puuid);
+        // 받아온 데이터 json 파싱하기
+        return parseMatch(matches);
+    }
+
+
+
+    private static BufferedReader getBufferedReader(String apiUrl) throws IOException {
+        URL url = new URL(apiUrl);
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        connection.setRequestMethod("GET");
+        int responseCode = connection.getResponseCode();
+        BufferedReader br;
+        if (responseCode == 200) {
+            br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+        } else {
+            br = new BufferedReader(new InputStreamReader(connection.getErrorStream()));
+        }
+        return br;
     }
 }

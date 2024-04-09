@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="utf-8">
+    <link th:href="@{/css/bootstrap.min.css}"
+          href="../css/bootstrap.min.css" rel="stylesheet">
+    <title>Title</title>
+</head>
+<style>
+    .field-error {
+        color: #0a53be;
+    }
+</style>
+<body>
+<div class="container" style="max-width: 600px">
+    <div class="py-5 text-center">
+        <h2 class="font-monospace fw-bold text-primary">날짜 검색</h2>
+        <p>
+        <form action="" th:action th:object="${match}" method="post">
+            <input type="datetime-local" th:field="*{start}">
+            <input type="datetime-local" th:field="*{end}">
+            <input type="submit" value="검색">
+        </form>
+        </p>
+    </div>
+</div>
+
+</body>
+</html>
