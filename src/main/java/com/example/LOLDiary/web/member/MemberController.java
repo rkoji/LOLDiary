@@ -1,6 +1,7 @@
 package com.example.LOLDiary.web.member;
 
 import com.example.LOLDiary.domain.member.Member;
+import com.example.LOLDiary.web.member.dto.JoinRequestDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -25,7 +26,7 @@ public class MemberController {
     }
 
     @PostMapping("/add")
-    public String save(@Validated @ModelAttribute("member") JoinMemberDto dto,BindingResult bindingResult) {
+    public String save(@Validated @ModelAttribute("member") JoinRequestDto dto, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             log.info("에러발생");
             log.error(bindingResult.getAllErrors().toString());
