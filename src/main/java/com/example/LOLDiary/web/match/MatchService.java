@@ -7,10 +7,11 @@ import reactor.core.publisher.Mono;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 public interface MatchService {
-    MatchDto searchMatchListByDate(LocalDateTime start, LocalDateTime end, String nickname) throws JsonProcessingException;
+    Mono<List<MatchDto>> searchMatchListByDate(LocalDateTime start, LocalDateTime end, String nickname, String tag) throws JsonProcessingException;
 
     Mono<Summoner> getSummonerData(String summonerName, String tag);
 }

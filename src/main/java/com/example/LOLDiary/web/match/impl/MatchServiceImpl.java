@@ -8,6 +8,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
@@ -15,6 +16,7 @@ import reactor.core.publisher.Mono;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -48,19 +50,23 @@ public class MatchServiceImpl implements MatchService {
 
 
     @Override
-    public MatchDto searchMatchListByDate(LocalDateTime start, LocalDateTime end, String nickname) throws JsonProcessingException {
-        Summoner summoner = summonerRepository.findByName(nickname).orElseThrow(IllegalAccessError::new);
-
-        String puuId = summoner.getPuuId();
+    public Mono<List<MatchDto>> searchMatchListByDate(LocalDateTime start, LocalDateTime end, String summonerName , String tag) throws JsonProcessingException {
+        String baseUrl = "https://asia.api.riotgames.com/lol/match/v5/matches/by-puuid/";
 
         long startEpochTimestamp = start.atZone(ZoneOffset.UTC).toEpochSecond();
         long endEpochTimestamp = end.atZone(ZoneOffset.UTC).toEpochSecond();
 
-////        List<String> matchList = getApi.getMatchList(startEpochTimestamp, endEpochTimestamp, puuId);
-//
-//        return MatchDto.builder()
-//                .matchIds(matchList)
-//                .build();
-        return null;
+        return getPuuId(summonerName, tag)
+                .flatMap(ppuId -> {
+                    return webClient.get()
+                            .uri(baseUrl + ppuId + "/ids?startTime=" + startEpochTimestamp + "&endTime=" + endEpochTimestamp)
+                            .retrieve()
+                            .bodyToMono(new ParameterizedTypeReference<List<String>>() {
+                            })
+                            .map(mathIds -> mathIds.stream()
+                                    .map(MatchDto::new)
+                                    .collect(Collectors.toList()));
+                });
     }
+
 }

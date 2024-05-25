@@ -17,9 +17,9 @@
         <h2 class="font-monospace fw-bold text-primary">검색 리스트</h2>
         <p>
         <ul>
-            <h4 th:each="matchId : ${matchList.matchIds}">
+            <h4 th:each="matchDto : ${matchList}">
                 <span class="border border-primary p-2 mb-2 border-opacity-50 form-control text-center"
-                      th:text="${matchId}"></span>
+                      th:text="${matchDto.matchId}"></span>
             </h4>
         </ul>
         </p>

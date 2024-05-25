@@ -11,5 +11,6 @@ import java.util.List;
 @Builder
 public class MatchDto {
 
-    private List<String> matchIds;
+    private String matchId;
+
 }
