@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import reactor.core.publisher.Mono;
 
 import static com.example.LOLDiary.web.session.SessionConst.LOGIN_MEMBER;
 
@@ -42,15 +43,6 @@ public class DiaryController {
         String diaryText = dto.getDiaryText();
         diaryService.createDiary(nickname, diaryText);
         return "redirect:/";
-    }
-
-    @GetMapping("/summoner")
-    public String getSummoner(HttpServletRequest request, Model model) {
-        Member loginMember = getMemberFromSession(request);
-        String nickname = loginMember.getNickname();
-        Summoner summonerData = diaryService.getSummonerData(nickname);
-        model.addAttribute("summoner", summonerData);
-        return "diary/summoner";
     }
 
     private Member getMemberFromSession(HttpServletRequest request) {
