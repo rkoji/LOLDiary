@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import reactor.core.publisher.Mono;
 
 import static com.example.LOLDiary.web.session.SessionConst.LOGIN_MEMBER;
 
@@ -47,6 +48,17 @@ public class MatchController {
         model.addAttribute("matchList", matchDto);
 
         return "/match/searchMatchListForm";
+    }
+
+    @GetMapping("/summoner")
+    public Mono<String> getSummoner(HttpServletRequest request, Model model) {
+        Member loginMember = getMemberFromSession(request);
+        String nickname = loginMember.getNickname();
+        String tag = loginMember.getTag();
+        model.addAttribute("nickname", nickname);
+        return matchService.getSummonerData(nickname, tag)
+                .doOnNext(summoner -> model.addAttribute("summoner", summoner))
+                .then(Mono.just("match/summoner"));
     }
 
     private Member getMemberFromSession(HttpServletRequest request) {

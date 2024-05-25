@@ -1,9 +1,9 @@
 package com.example.LOLDiary.domain.summoner;
 
-import com.example.LOLDiary.web.member.SummonerDto;
+import com.example.LOLDiary.web.config.LocalDateTimeToLocalDateDeserializer;
+import com.example.LOLDiary.web.member.dto.SummonerDto;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -20,14 +20,19 @@ import java.time.LocalDate;
 public class Summoner {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-//    private String summonerId;
+    private String id;
+
     private String accountId;
+
     private String puuId;
+
     private String name;
+
     private Long profileIconId;
+
+    @JsonDeserialize(using = LocalDateTimeToLocalDateDeserializer.class)
     private LocalDate revisionDate;
+
     private Long summonerLevel;
 
     public Summoner saveSummoner(SummonerDto dto) {
