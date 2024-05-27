@@ -1,4 +1,4 @@
-package com.example.LOLDiary.web.match;
+package com.example.LOLDiary.web.match.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
