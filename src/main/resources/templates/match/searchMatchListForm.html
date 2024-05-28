@@ -19,7 +19,7 @@
         <ul>
             <h4 th:each="matchDto : ${matchList}">
                 <span class="border border-primary p-2 mb-2 border-opacity-50 form-control text-center"
-                      th:text="${matchDto.matchId}"></span>
+                      th:text="|챔피언 ${matchDto.championName}, kda : ${matchDto.challenges.kda} |"></span>
             </h4>
         </ul>
         </p>
