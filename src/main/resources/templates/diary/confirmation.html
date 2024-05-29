@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Diary List</title>
+</head>
+<body>
+<h2>Diary List</h2>
+<table>
+    <thead>
+    <tr>
+        <th>Champion Name</th>
+        <th>KDA</th>
+        <th>Name</th>
+        <th>Diary Text</th>
+        <th>Date</th>
+        <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="diary : ${diary}">
+        <td th:text="${diary.championName}">Champion Name</td>
+        <td th:text="${diary.kda}">KDA</td>
+        <td th:text="${diary.name}">Name</td>
+        <td th:text="${diary.diaryText}">Diary Text</td>
+        <td th:text="${diary.date}">Date</td>
+<!--        <td>-->
+<!--            <a th:href="@{'/diaries/' + ${diary.id}}">View</a>-->
+<!--            <a th:href="@{'/diaries/' + ${diary.id} + '/edit'}">Edit</a>-->
+<!--            <a th:href="@{'/diaries/' + ${diary.id} + '/delete'}">Delete</a>-->
+<!--        </td>-->
+    </tr>
+    </tbody>
+</table>
+<a href="/">Go back to home</a>
+</body>
+</html>

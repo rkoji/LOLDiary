@@ -1,5 +1,6 @@
 package com.example.LOLDiary.domain.diary;
 
+import com.example.LOLDiary.web.diary.dto.DiaryDto;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -25,10 +26,24 @@ public class Diary {
     private Long id;
 
     @NotEmpty
-    private String nickname;
-//    private String champion;
+    private String name;
+    @NotEmpty
+    private String championName;
+    @NotNull
+    private float kda;
     @NotEmpty
     private String diaryText;
-    @NotEmpty
+
     private LocalDate date;
+
+
+    public static Diary createDiary(DiaryDto dto) {
+        return Diary.builder()
+                .name(dto.getName())
+                .championName(dto.getChampionName())
+                .kda(dto.getKda())
+                .diaryText(dto.getDiaryText())
+                .date(LocalDate.now())
+                .build();
+    }
 }

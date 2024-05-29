@@ -3,24 +3,29 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>다이어리 작성</title>
 </head>
 <body>
 <h2>다이어리 작성</h2>
 <div>
-    <span th:text="${nickname}">닉네임</span>
+    <span th:text="|챔피언 ${diaryDto.championName}|">챔피언 이름</span>
 </div>
-<form th:action th:object="${diary}" method="post">
+<div>
+    <span th:text="|kda ${diaryDto.kda}|">kda</span>
+</div>
+<div>
+    <span th:text="|닉네임 ${diaryDto.name}|">닉네임</span>
+</div>
+<form th:action="@{/diary}" th:object="${diaryDto}" method="post">
+    <input type="hidden" th:field="*{championName}" />
+    <input type="hidden" th:field="*{kda}" />
+    <input type="hidden" th:field="*{name}" />
     <div>
         <label for="diaryText">내용</label>
-        <input type="text" id="diaryText" th:field="*{diaryText}" class="field-error">
-        <div class="field-error" th:errors="*{diaryText}"></div>
+        <textarea id="diaryText" th:field="*{diaryText}" class="field-error" placeholder="내용을 작성해 주세요"></textarea>
     </div>
-
     <button type="submit">작성 완료</button>
     <button th:onclick="|location.href='@{/}'|" type="button">취소</button>
-
 </form>
-
 </body>
 </html>

@@ -1,21 +1,11 @@
 package com.example.LOLDiary.web.diary;
 
-import com.example.LOLDiary.domain.member.Member;
-import com.example.LOLDiary.domain.summoner.Summoner;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
+import com.example.LOLDiary.web.diary.dto.DiaryDto;
+import com.example.LOLDiary.web.diary.dto.DiaryResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import reactor.core.publisher.Mono;
-
-import static com.example.LOLDiary.web.session.SessionConst.LOGIN_MEMBER;
+import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @Controller
@@ -24,29 +14,40 @@ public class DiaryController {
 
     private final DiaryService diaryService;
 
-    @GetMapping("/create")
-    public String createFrom(@Validated @ModelAttribute("diary") DiaryDto dto, HttpServletRequest request, Model model) {
-        Member loginMember = getMemberFromSession(request);
-        String nickname = loginMember.getNickname();
-        model.addAttribute("nickname", nickname);
+    @GetMapping
+    public String createForm(@RequestParam("championName") String championName,
+                             @RequestParam("kda") float kda,
+                             @RequestParam("name") String name,
+                             Model model) {
+//        model.addAttribute("championName", championName);
+//        model.addAttribute("kda", kda);
+//        model.addAttribute("name", name);
+
+        DiaryDto diaryDto = DiaryDto.builder()
+                .championName(championName)
+                .kda(kda)
+                .name(name)
+                .build();
+
+        System.out.println("Champion Name: " + diaryDto.getChampionName());
+        System.out.println("KDA: " + diaryDto.getKda());
+        System.out.println("Name: " + diaryDto.getName());
+
+        model.addAttribute("diaryDto", diaryDto);
         return "diary/createForm";
     }
 
-    @PostMapping("/create")
-    public String createDiary(@Validated @ModelAttribute("diary") DiaryDto dto, BindingResult bindingResult, HttpServletRequest request) {
-        if (bindingResult.hasErrors()) {
-            return "login/loginForm";
-        }
+    @PostMapping
+    public String createDiary(@ModelAttribute("diaryDto") DiaryDto dto,
+                              Model model) {
+        System.out.println("Champion Name: " + dto.getChampionName());
+        System.out.println("KDA: " + dto.getKda());
+        System.out.println("Name: " + dto.getName());
+        System.out.println("Diary Text: " + dto.getDiaryText());
 
-        Member loginMember = getMemberFromSession(request);
-        String nickname = loginMember.getNickname();
-        String diaryText = dto.getDiaryText();
-        diaryService.createDiary(nickname, diaryText);
-        return "redirect:/";
+        DiaryResponseDto diary = diaryService.createDiary(dto);
+        model.addAttribute("diary", diary);
+        return "diary/confirmation";
     }
 
-    private Member getMemberFromSession(HttpServletRequest request) {
-        HttpSession session = request.getSession(false);
-        return (Member) session.getAttribute(LOGIN_MEMBER);
-    }
 }
