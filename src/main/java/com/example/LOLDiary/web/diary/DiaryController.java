@@ -26,10 +26,6 @@ public class DiaryController {
                 .name(name)
                 .build();
 
-        System.out.println("Champion Name: " + diaryDto.getChampionName());
-        System.out.println("KDA: " + diaryDto.getKda());
-        System.out.println("Name: " + diaryDto.getName());
-
         model.addAttribute("diaryDto", diaryDto);
         return "diary/createForm";
     }
@@ -37,11 +33,6 @@ public class DiaryController {
     @PostMapping
     public String createDiary(@ModelAttribute("diaryDto") DiaryDto dto,
                               Model model) {
-        System.out.println("Champion Name: " + dto.getChampionName());
-        System.out.println("KDA: " + dto.getKda());
-        System.out.println("Name: " + dto.getName());
-        System.out.println("Diary Text: " + dto.getDiaryText());
-
         DiaryResponseDto diary = diaryService.createDiary(dto);
         model.addAttribute("diary", diary);
         return "diary/confirmation";
