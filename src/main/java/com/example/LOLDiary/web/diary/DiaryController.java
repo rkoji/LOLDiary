@@ -19,9 +19,6 @@ public class DiaryController {
                              @RequestParam("kda") float kda,
                              @RequestParam("name") String name,
                              Model model) {
-//        model.addAttribute("championName", championName);
-//        model.addAttribute("kda", kda);
-//        model.addAttribute("name", name);
 
         DiaryDto diaryDto = DiaryDto.builder()
                 .championName(championName)
