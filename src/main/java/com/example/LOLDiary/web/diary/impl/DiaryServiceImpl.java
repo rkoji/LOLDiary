@@ -7,6 +7,7 @@ import com.example.LOLDiary.web.diary.DiaryService;
 import com.example.LOLDiary.web.diary.dto.DiaryResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
 @Service
@@ -19,6 +20,32 @@ public class DiaryServiceImpl implements DiaryService {
         Diary savedDiary = diaryRepository.save(Diary.createDiary(dto));
         return new DiaryResponseDto(savedDiary);
     }
+
+    @Override
+    public Diary findByNickname(Long id) {
+        return diaryRepository.findById(id).orElseThrow();
+    }
+
+    @Override
+    public void deleteDiary(Long id, Long userId) {
+        Diary diary = diaryRepository.findById(id).orElseThrow();
+        if (diary.getId().equals(userId)) {
+            diaryRepository.deleteById(diary.getId());
+        } else {
+            // error메서드 만들기
+            System.out.println("Id가 다름!");
+        }
+    }
+
+    @Override
+    @Transactional
+    public DiaryResponseDto editDiary(Long id,String diaryText) {
+        Diary diary = diaryRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 다이어리입니다."));
+        Diary updateDiary = Diary.updateDiary(diaryText,diary);
+        diaryRepository.save(updateDiary);
+        return new DiaryResponseDto(updateDiary);
+    }
+
 }
 
 

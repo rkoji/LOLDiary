@@ -1,6 +1,7 @@
 package com.example.LOLDiary.domain.diary;
 
 import com.example.LOLDiary.web.diary.dto.DiaryDto;
+import com.example.LOLDiary.web.diary.dto.UpdateDiaryDto;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -11,6 +12,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import net.bytebuddy.asm.Advice;
 
 import java.time.LocalDate;
 
@@ -43,6 +45,17 @@ public class Diary {
                 .championName(dto.getChampionName())
                 .kda(dto.getKda())
                 .diaryText(dto.getDiaryText())
+                .date(LocalDate.now())
+                .build();
+    }
+
+    public static Diary updateDiary(String diaryText,Diary diary) {
+        return Diary.builder()
+                .id(diary.getId())
+                .name(diary.getName())
+                .championName(diary.getChampionName())
+                .kda(diary.getKda())
+                .diaryText(diaryText)
                 .date(LocalDate.now())
                 .build();
     }
