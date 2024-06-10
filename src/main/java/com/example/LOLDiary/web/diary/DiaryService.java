@@ -13,5 +13,5 @@ public interface DiaryService {
 
     Diary findByNickname(Long nickname);
 
-    void deleteDiary(Long id, Long userId);
+    void deleteDiary(Long id);
 }

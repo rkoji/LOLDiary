@@ -27,14 +27,8 @@ public class DiaryServiceImpl implements DiaryService {
     }
 
     @Override
-    public void deleteDiary(Long id, Long userId) {
-        Diary diary = diaryRepository.findById(id).orElseThrow();
-        if (diary.getId().equals(userId)) {
-            diaryRepository.deleteById(diary.getId());
-        } else {
-            // error메서드 만들기
-            System.out.println("Id가 다름!");
-        }
+    public void deleteDiary(Long id) {
+        diaryRepository.deleteById(id);
     }
 
     @Override

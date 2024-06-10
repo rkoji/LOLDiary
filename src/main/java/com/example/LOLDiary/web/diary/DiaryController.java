@@ -59,10 +59,11 @@ public class DiaryController {
         return "diary/confirmation";
     }
 
-    @DeleteMapping("/{id}")
-    public String deleteDiary(@PathVariable Long id, HttpServletRequest request) {
-        Long userId = getMemberFromSession(request).getId();
-        diaryService.deleteDiary(id, userId);
+    @GetMapping("/delete/{id}")
+    public String deleteDiary(@PathVariable Long id,HttpServletRequest request,Model model) {
+        Member member = getMemberFromSession(request);
+        model.addAttribute("member", member);
+        diaryService.deleteDiary(id);
         return "loginHome";
     }
 
