@@ -1,6 +1,5 @@
 package com.example.LOLDiary.domain.member;
 
-import com.example.LOLDiary.web.member.JoinMemberDto;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -25,5 +24,7 @@ public class Member {
     private String nickname;
     @NotEmpty
     private String password;
+    @NotEmpty
+    private String tag;
 
 }
