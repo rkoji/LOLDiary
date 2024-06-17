@@ -18,8 +18,9 @@
         <p>
         <ul>
             <h4 th:each="matchDto : ${matchList}">
-                <span class="border border-primary p-2 mb-2 border-opacity-50 form-control text-center"
-                      th:text="|챔피언 ${matchDto.championName}, kda : ${matchDto.challenges.kda} |"></span>
+                <a th:href="@{|/diary?championName=${matchDto.championName}&kda=${matchDto.challenges.kda}&name=${matchDto.riotIdGameName}|}"
+                   class="clickable-span border border-primary p-2 mb-2 border-opacity-50 form-control text-center"
+                   th:text="|챔피언 ${matchDto.championName}, kda : ${matchDto.challenges.kda}|"></a>
             </h4>
         </ul>
         </p>
