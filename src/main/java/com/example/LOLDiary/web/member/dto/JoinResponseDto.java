@@ -23,12 +23,16 @@ public class JoinResponseDto {
     @NotEmpty
     private String password;
 
+    @NotEmpty
+    private String tag;
+
     public static JoinResponseDto saveJoinResponseDto(Member joinMember) {
         return JoinResponseDto.builder()
                 .id(joinMember.getId())
                 .loginId(joinMember.getLoginId())
                 .nickname(joinMember.getNickname())
                 .password(joinMember.getPassword())
+                .tag(joinMember.getTag())
                 .build();
     }
 

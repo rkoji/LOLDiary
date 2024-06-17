@@ -18,11 +18,15 @@ public class JoinRequestDto {
     @NotEmpty
     private String password;
 
+    @NotEmpty
+    private String tag;
+
     public Member toEntity(){
         return Member.builder()
                 .loginId(loginId)
                 .nickname(nickname)
                 .password(password)
+                .tag(tag)
                 .build();
     }
 }
