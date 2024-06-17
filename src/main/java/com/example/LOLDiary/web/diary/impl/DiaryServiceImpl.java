@@ -2,12 +2,16 @@ package com.example.LOLDiary.web.diary.impl;
 
 import com.example.LOLDiary.domain.diary.Diary;
 import com.example.LOLDiary.domain.diary.DiaryRepository;
+import com.example.LOLDiary.domain.member.Member;
 import com.example.LOLDiary.web.diary.dto.DiaryDto;
 import com.example.LOLDiary.web.diary.DiaryService;
+import com.example.LOLDiary.web.diary.dto.DiaryListDto;
 import com.example.LOLDiary.web.diary.dto.DiaryResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -29,6 +33,13 @@ public class DiaryServiceImpl implements DiaryService {
     @Override
     public void deleteDiary(Long id) {
         diaryRepository.deleteById(id);
+    }
+
+    @Override
+    public DiaryListDto checkDiaryList(Member member,Long id) {
+        Diary diary = diaryRepository.findAllById(id).orElseThrow();
+        diaryRepository.findAllById(id).orElseThrow();
+        return new DiaryListDto(diary);
     }
 
     @Override

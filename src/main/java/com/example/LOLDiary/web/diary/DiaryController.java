@@ -3,6 +3,7 @@ package com.example.LOLDiary.web.diary;
 import com.example.LOLDiary.domain.diary.Diary;
 import com.example.LOLDiary.domain.member.Member;
 import com.example.LOLDiary.web.diary.dto.DiaryDto;
+import com.example.LOLDiary.web.diary.dto.DiaryListDto;
 import com.example.LOLDiary.web.diary.dto.DiaryResponseDto;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -66,6 +67,15 @@ public class DiaryController {
         diaryService.deleteDiary(id);
         return "loginHome";
     }
+
+    @GetMapping("/{id}")
+    public String checkDiaryList(@PathVariable("id") Long id, HttpServletRequest request,Model model) {
+        Member member = getMemberFromSession(request);
+        DiaryListDto diaryListDto = diaryService.checkDiaryList(member, id);
+        model.addAttribute("diary", diaryListDto);
+        return "diary/list";
+    }
+
 
     private Member getMemberFromSession(HttpServletRequest request) {
         HttpSession session = request.getSession(false);

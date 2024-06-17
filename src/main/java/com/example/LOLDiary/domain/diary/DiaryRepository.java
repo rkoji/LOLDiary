@@ -14,4 +14,6 @@ public interface DiaryRepository extends JpaRepository<Diary,Long> {
     Optional<Diary> findByNameAndKda(String nickname,float kda);
 
     Optional<Diary> findByKda(float kda);
+
+    Optional<Diary> findAllById(Long id);
 }
