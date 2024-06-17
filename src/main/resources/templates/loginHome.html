@@ -1,17 +1,28 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <head>
   <meta charset="utf-8">
   <link th:href="@{/css/bootstrap.min.css}"
-        href="css/bootstrap.min.css" rel="stylesheet">
+        href="../css/bootstrap.min.css" rel="stylesheet">
+  <title>Title</title>
 </head>
+<style>
+  .field-error {
+    color: #0a53be;
+  }
+</style>
 <body>
-<h2>로그인 후 홈 화면</h2>
-<h4 th:text="|로그인: ${member.nickname}|">로그인 사용자 이름</h4>
-<button type="button" th:onclick="|location.href='@{/diary/summoner}'|"}>
-  소환사 정보
+<div class="container" style="max-width: 600px">
+  <div class="py-5 text-center">
+    <h2 class="font-monospace fw-bold">홈</h2>
+  </div>
+<h4 class="font-monospace fw-bold" th:text="|로그인: ${member.nickname}|">사용자</h4>
+  <div>
+<button type="button" th:onclick="|location.href='@{/match/summoner}'|"}>
+  사용자 정보
 </button>
-<button type="button" th:onclick="|location.href='@{/diary/create}'|"}>
+  </div>
+<button type="button" th:onclick="|location.href='@{/match/list}'|"}>
   다이어리 작성
 </button>
 <form th:action="@{/logout}" method="post">
@@ -19,5 +30,6 @@
     로그아웃
   </button>
 </form>
+</div>
 </body>
 </html>
