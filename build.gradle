@@ -36,6 +36,9 @@ dependencies {
 	implementation group: 'net.bytebuddy', name: 'byte-buddy', version: '1.14.15'
 	implementation group: 'org.objenesis', name: 'objenesis', version: '3.4'
 	implementation 'org.springframework.boot:spring-boot-starter-webflux'
+
+	//swagger
+	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2'
 }
 
 test {
