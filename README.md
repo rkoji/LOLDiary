@@ -1,5 +1,4 @@
 # LOL-Diary
--------
 LOL-Diary는 **League of Legends** 플레이어들이 게임 일기를 작성하고 분석할 수 있는 **웹 애플리케이션**입니다.
 
 ## 기술 스택
