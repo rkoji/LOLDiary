@@ -24,13 +24,13 @@ public class MemberController {
     private final MemberService memberService;
 
     @Operation(summary = "회원가입 화면", description = "사용자가 회원가입 정보를 입력합니다.")
-    @GetMapping("/add")
+    @GetMapping("/signup")
     public String joinForm(@ModelAttribute Member member) {
         return "members/joinForm";
     }
 
     @Operation(summary = "회원가입",description = "사용자가 회원가입을 요청합니다.")
-    @PostMapping("/add")
+    @PostMapping("/signup")
     public String save(@Validated @ModelAttribute("member") JoinRequestDto dto, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             log.info("에러발생");
