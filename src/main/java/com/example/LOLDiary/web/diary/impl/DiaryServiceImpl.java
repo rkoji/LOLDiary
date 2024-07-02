@@ -7,6 +7,7 @@ import com.example.LOLDiary.web.diary.dto.DiaryDto;
 import com.example.LOLDiary.web.diary.DiaryService;
 import com.example.LOLDiary.web.diary.dto.DiaryListDto;
 import com.example.LOLDiary.web.diary.dto.DiaryResponseDto;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
