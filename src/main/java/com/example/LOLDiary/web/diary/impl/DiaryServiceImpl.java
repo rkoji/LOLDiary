@@ -3,6 +3,8 @@ package com.example.LOLDiary.web.diary.impl;
 import com.example.LOLDiary.domain.diary.Diary;
 import com.example.LOLDiary.domain.diary.DiaryRepository;
 import com.example.LOLDiary.domain.member.Member;
+import com.example.LOLDiary.exception.CustomException;
+import com.example.LOLDiary.exception.ErrorCode;
 import com.example.LOLDiary.web.diary.dto.DiaryDto;
 import com.example.LOLDiary.web.diary.DiaryService;
 import com.example.LOLDiary.web.diary.dto.DiaryListDto;
@@ -22,6 +24,9 @@ public class DiaryServiceImpl implements DiaryService {
 
     @Override
     public DiaryResponseDto createDiary(DiaryDto dto) {
+        if (dto.getDiaryText() == null) {
+            throw new CustomException(ErrorCode.DIARY_TEXT_NOT_FOUND);
+        }
         Diary savedDiary = diaryRepository.save(Diary.createDiary(dto));
         return new DiaryResponseDto(savedDiary);
     }
