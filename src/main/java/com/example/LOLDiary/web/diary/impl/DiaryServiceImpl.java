@@ -16,6 +16,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
+import static com.example.LOLDiary.exception.ErrorCode.*;
+
 @RequiredArgsConstructor
 @Service
 public class DiaryServiceImpl implements DiaryService {
@@ -25,7 +27,7 @@ public class DiaryServiceImpl implements DiaryService {
     @Override
     public DiaryResponseDto createDiary(DiaryDto dto) {
         if (dto.getDiaryText() == null) {
-            throw new CustomException(ErrorCode.DIARY_TEXT_NOT_FOUND);
+            throw new CustomException(DIARY_TEXT_NOT_FOUND);
         }
         Diary savedDiary = diaryRepository.save(Diary.createDiary(dto));
         return new DiaryResponseDto(savedDiary);
@@ -51,7 +53,8 @@ public class DiaryServiceImpl implements DiaryService {
     @Override
     @Transactional
     public DiaryResponseDto editDiary(Long id,String diaryText) {
-        Diary diary = diaryRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 다이어리입니다."));
+        Diary diary = diaryRepository.findById(id)
+                .orElseThrow(() -> new CustomException(DIARY_NOT_FOUND));
         Diary updateDiary = Diary.updateDiary(diaryText,diary);
         diaryRepository.save(updateDiary);
         return new DiaryResponseDto(updateDiary);
